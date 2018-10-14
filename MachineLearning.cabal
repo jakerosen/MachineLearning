@@ -1,0 +1,29 @@
+name:           MachineLearning
+version:        0.1.0.0
+build-type:     Simple
+cabal-version:  >= 1.10
+
+library
+ exposed-modules:
+    Ex2
+  , Ex3
+ hs-source-dirs: src
+ build-depends:
+     hmatrix
+   , base
+   , vector
+ default-extensions:
+     OverloadedStrings
+
+executable ML
+  main-is: Main.hs
+  hs-source-dirs: app
+  ghc-options:
+    -threaded -rtsopts -with-rtsopts=-N -Wall -Wmissing-local-signatures -O
+  build-depends:
+      base >=4.7 && <5
+    , MachineLearning
+    , hmatrix
+    , vector
+    , text
+  default-language: Haskell2010
