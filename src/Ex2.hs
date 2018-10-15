@@ -1,5 +1,6 @@
 module Ex2
-  ( logisticCost
+  ( hypMat
+  , logisticCost
   , logisticGradDescent
   , logisticRegularizedCost
   , logisticRegularizedUpdate
@@ -14,6 +15,16 @@ h t x = g (x #> t)
   where
     g :: Vector Double -> Vector Double
     g z = 1 / (1 + exp (-z))
+
+hypMat
+  :: Matrix Double          -- x
+  -> Matrix Double          -- t
+  -> Matrix Double          -- result
+hypMat x t = g (x <> t)
+  where
+    g :: Matrix Double -> Matrix Double
+    g z = 1 / (1 + exp (-z))
+
 
 logisticCost
   :: Vector Double -- t

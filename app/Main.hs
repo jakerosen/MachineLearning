@@ -7,14 +7,14 @@ import Data.Text (Text)
 import qualified Data.Text as Text
 import qualified Data.Text.IO as Text
 import qualified Data.Text.Read as Text
-import qualified Data.Vector.Storable as Vector (take)
+import qualified Data.Vector.Storable as Vector (take, toList)
 import Control.Monad
 import Data.Traversable
 import Data.Foldable
+import Text.Printf
 import Debug.Trace
 -- import Control.Lens
 import Ex2
-import Ex3
 
 main :: IO ()
 main = do
@@ -52,13 +52,32 @@ main = do
     result :: [[Vector Double]]
     result = map oneVsAll [1..10]
 
+    thetaMat :: Matrix Double
+    thetaMat = fromColumns (map (!! 100) result)
+
     test1 :: [Vector Double]
     test1 = oneVsAll 1
 
-  for_ (take 25 test1) $ \vec ->
-    print (Vector.take 5 vec)
-  -- pure test1
-  -- pure ()
+    predict
+      :: Matrix Double       -- x
+      -> Matrix Double       -- t
+      -> [Int]               -- prediction
+    predict imgs ts =
+      map
+        ((+1) . maxIndex)
+        (toRows (hypMat imgs ts))
+
+    accuracy :: Double
+    accuracy =
+      let
+        u = length $ filter
+          (\(a, b) -> a == b)
+          (zip (predict x thetaMat) (map floor $ Vector.toList y))
+      in 100 * (fromIntegral u) / (fromIntegral (size y))
+
+  printf "%.2f%% correct\n" accuracy
+  -- for_ (take 25 test1) $ \vec ->
+  --   print (Vector.take 5 vec)
   -- print $ result
   -- print $ take 10 $ toList $ result !! 0
 

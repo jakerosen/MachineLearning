@@ -6,7 +6,6 @@ cabal-version:  >= 1.10
 library
  exposed-modules:
     Ex2
-  , Ex3
  hs-source-dirs: src
  build-depends:
      hmatrix
